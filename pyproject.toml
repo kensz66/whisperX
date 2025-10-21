@@ -41,26 +41,28 @@ where = ["."]
 include = ["whisperx*"]
 
 [tool.uv.sources]
+# 仅在 aarch64 Linux 环境下使用 CUDA 12.8 源
 torch = [
-  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
-  { index = "pytorch-cpu", marker = "platform_machine != 'x86_64' and sys_platform != 'darwin'" },
-  { index = "pytorch", marker = "platform_machine == 'x86_64' and sys_platform != 'darwin'" },
+  { index = "pytorch-cuda", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+  { index = "pytorch-cuda", marker = "sys_platform != 'darwin' and platform_machine != 'aarch64'" } # 其他非 Mac/非 aarch64 也用 CUDA
 ]
+
 torchaudio = [
-  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
-  { index = "pytorch-cpu", marker = "platform_machine != 'x86_64' and sys_platform != 'darwin'" },
-  { index = "pytorch", marker = "platform_machine == 'x86_64' and sys_platform != 'darwin'" },
+  { index = "pytorch-cuda", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+  { index = "pytorch-cuda", marker = "sys_platform != 'darwin' and platform_machine != 'aarch64'" }
 ]
-triton = [
-  { index = "pytorch", marker = "sys_platform == 'linux'" },
+
+torchvision = [
+  { index = "pytorch-cuda", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
+  { index = "pytorch-cuda", marker = "sys_platform != 'darwin' and platform_machine != 'aarch64'" }
 ]
 
 [[tool.uv.index]]
-name = "pytorch"
+name = "pytorch-cuda"
 url = "https://download.pytorch.org/whl/cu128"
 explicit = true
 
-[[tool.uv.index]]
-name = "pytorch-cpu"
-url = "https://download.pytorch.org/whl/cpu"
-explicit = true
+# [[tool.uv.index]]
+# name = "pytorch-cpu"
+# url = "https://download.pytorch.org/whl/cpu"
+# explicit = true
