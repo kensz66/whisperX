@@ -1,5 +1,5 @@
 [project]
-urls = { repository = "https://github.com/kensz66/whisperx" }
+urls = { repository = "https://github.com/m-bain/whisperx" }
 authors = [{ name = "Max Bain" }]
 name = "whisperx"
 version = "3.7.4"
@@ -9,16 +9,15 @@ requires-python = ">=3.9, <3.14"
 license = { text = "BSD-2-Clause" }
 
 dependencies = [
-    "ctranslate2>=4.6.0",
+    "ctranslate2>=4.5.0",
     "faster-whisper>=1.1.1",
     "nltk>=3.9.1",
     # Restrict numpy, onnxruntime, pandas, av to be compatible with Python 3.9
-    # "numpy>=1.21.2,<2.1.0; python_version <'3.13'",
-    "numpy>=1.21.2",
+    "numpy>=2.0.2,<2.1.0; python_version <'3.13'",
     "onnxruntime>=1.19,<1.20.0; python_version <'3.10'",
-    "pandas>=2.2.3",
+    "pandas>=2.2.3,<2.3.0",
     "av<16.0.0",
-    # "numpy>=1.21,<2.3.0; python_version >='3.13'",
+    "numpy>=2.1.0,<2.3.0; python_version >='3.13'",
     "pyannote-audio>=3.3.2,<4.0.0",
     "torch~=2.8.0",
     "torchaudio~=2.8.0",
@@ -41,20 +40,18 @@ where = ["."]
 include = ["whisperx*"]
 
 [tool.uv.sources]
-# 仅在 aarch64 Linux 环境下使用 CUDA 12.8 源
 torch = [
-  { index = "pytorch-cuda", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
-  { index = "pytorch-cuda", marker = "sys_platform != 'darwin' and platform_machine != 'aarch64'" } # 其他非 Mac/非 aarch64 也用 CUDA
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cpu", marker = "platform_machine != 'x86_64' and sys_platform != 'darwin'" },
+  { index = "pytorch", marker = "platform_machine == 'x86_64' and sys_platform != 'darwin'" },
 ]
-
 torchaudio = [
-  { index = "pytorch-cuda", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
-  { index = "pytorch-cuda", marker = "sys_platform != 'darwin' and platform_machine != 'aarch64'" }
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cpu", marker = "platform_machine != 'x86_64' and sys_platform != 'darwin'" },
+  { index = "pytorch", marker = "platform_machine == 'x86_64' and sys_platform != 'darwin'" },
 ]
-
-torchvision = [
-  { index = "pytorch-cuda", marker = "platform_machine == 'aarch64' and sys_platform == 'linux'" },
-  { index = "pytorch-cuda", marker = "sys_platform != 'darwin' and platform_machine != 'aarch64'" }
+triton = [
+  { index = "pytorch", marker = "sys_platform == 'linux'" },
 ]
 
 [[tool.uv.index]]
