@@ -9,7 +9,7 @@ requires-python = ">=3.9, <3.14"
 license = { text = "BSD-2-Clause" }
 
 dependencies = [
-    "ctranslate2=>=4.4.0,<5.0.0",
+    "ctranslate2=>=4.6.0",
     "faster-whisper>=1.1.1",
     "nltk>=3.9.1",
     # Restrict numpy, onnxruntime, pandas, av to be compatible with Python 3.9
