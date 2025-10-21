@@ -1,5 +1,5 @@
 [project]
-urls = { repository = "https://github.com/m-bain/whisperx" }
+urls = { repository = "https://github.com/kensz66/whisperx" }
 authors = [{ name = "Max Bain" }]
 name = "whisperx"
 version = "3.7.4"
